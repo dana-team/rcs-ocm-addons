@@ -121,19 +121,10 @@ install: kustomize ## Install CRDs into the K8s cluster specified in ~/.kube/con
 uninstall: kustomize ## Uninstall CRDs from the K8s cluster specified in ~/.kube/config. Call with ignore-not-found=true to ignore resource not found errors during deletion.
 	$(KUSTOMIZE) build config/crd | $(KUBECTL) delete --ignore-not-found=$(ignore-not-found) -f -
 
-.PHONY: deploy
-deploy: kustomize ## Deploy controller to the K8s cluster specified in ~/.kube/config.
-	cd config/manager && $(KUSTOMIZE) edit set image controller=${IMG}
-	$(KUSTOMIZE) build config/default | $(KUBECTL) apply -f -
-
-.PHONY: undeploy
-undeploy: kustomize ## Undeploy controller from the K8s cluster specified in ~/.kube/config. Call with ignore-not-found=true to ignore resource not found errors during deletion.
-	$(KUSTOMIZE) build config/default | $(KUBECTL) delete --ignore-not-found=$(ignore-not-found) -f -
-
 .PHONY: deploy-status-addon
 deploy-status-addon: kustomize ## Deploy addon to the k8s cluster specified in ~/.kube/config.
 	cd status/deploy/resources/default && $(KUSTOMIZE) edit set image controller=${IMG}
-	$(KUSTOMIZE) build addons/status/deploy/resources/default | kubectl apply -f -
+	$(KUSTOMIZE) build status/deploy/resources/default | kubectl apply -f -
 
 .PHONY: deploy-score-addon
 deploy-score-addon: kustomize ## Deploy addon to the k8s cluster specified in ~/.kube/config.
