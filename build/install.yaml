@@ -1,0 +1,436 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: capp-status-addon-sa
+  namespace: open-cluster-management
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: rcs-score-addon-sa
+  namespace: open-cluster-management
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: capp-status-addon
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - events
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - delete
+  - deletecollection
+  - patch
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - roles
+  - rolebindings
+  - clusterroles
+  - clusterrolebindings
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - delete
+- apiGroups:
+  - authorization.k8s.io
+  resources:
+  - subjectaccessreviews
+  verbs:
+  - get
+  - create
+- apiGroups:
+  - certificates.k8s.io
+  resources:
+  - certificatesigningrequests
+  - certificatesigningrequests/approval
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+- apiGroups:
+  - certificates.k8s.io
+  resources:
+  - signers
+  verbs:
+  - approve
+- apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - managedclusters
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - work.open-cluster-management.io
+  resources:
+  - manifestworks
+  verbs:
+  - create
+  - update
+  - get
+  - list
+  - watch
+  - delete
+  - deletecollection
+  - patch
+- apiGroups:
+  - addon.open-cluster-management.io
+  resources:
+  - managedclusteraddons/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - addon.open-cluster-management.io
+  resources:
+  - clustermanagementaddons/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - addon.open-cluster-management.io
+  resources:
+  - clustermanagementaddons
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - addon.open-cluster-management.io
+  resources:
+  - managedclusteraddons
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - delete
+- apiGroups:
+  - addon.open-cluster-management.io
+  resources:
+  - managedclusteraddons/status
+  verbs:
+  - update
+  - patch
+- apiGroups:
+  - rcs.dana.io
+  resources:
+  - capps
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - rcs.dana.io
+  resources:
+  - capps/status
+  verbs:
+  - get
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: rcs-score-addon
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  - configmaps
+  - pods
+  - events
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - delete
+  - deletecollection
+  - patch
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - roles
+  - rolebindings
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - delete
+- apiGroups:
+  - authorization.k8s.io
+  resources:
+  - subjectaccessreviews
+  verbs:
+  - get
+  - create
+- apiGroups:
+  - certificates.k8s.io
+  resources:
+  - certificatesigningrequests
+  - certificatesigningrequests/approval
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+- apiGroups:
+  - certificates.k8s.io
+  resources:
+  - signers
+  verbs:
+  - approve
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - create
+  - get
+  - list
+  - update
+  - watch
+  - patch
+- apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - managedclusters
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - work.open-cluster-management.io
+  resources:
+  - manifestworks
+  verbs:
+  - create
+  - update
+  - get
+  - list
+  - watch
+  - delete
+  - deletecollection
+  - patch
+- apiGroups:
+  - addon.open-cluster-management.io
+  resources:
+  - clustermanagementaddons
+  verbs:
+  - get
+  - list
+  - watch
+  - patch
+- apiGroups:
+  - addon.open-cluster-management.io
+  resources:
+  - clustermanagementaddons/status
+  verbs:
+  - get
+  - list
+  - watch
+  - patch
+- apiGroups:
+  - addon.open-cluster-management.io
+  resources:
+  - managedclusteraddons
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+- apiGroups:
+  - addon.open-cluster-management.io
+  resources:
+  - managedclusteraddons/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - addon.open-cluster-management.io
+  resources:
+  - managedclusteraddons/status
+  verbs:
+  - update
+  - patch
+- apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - addonplacementscores
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - delete
+  - deletecollection
+  - patch
+- apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - addonplacementscores/status
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - delete
+  - deletecollection
+  - patch
+- apiGroups:
+  - addon.open-cluster-management.io
+  resources:
+  - addondeploymentconfigs
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: capp-status-addon
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: capp-status-addon
+subjects:
+- kind: ServiceAccount
+  name: capp-status-addon-sa
+  namespace: open-cluster-management
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: rcs-score-addon
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: rcs-score-addon
+subjects:
+- kind: ServiceAccount
+  name: rcs-score-addon-sa
+  namespace: open-cluster-management
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: capp-status-addon
+  name: capp-status-addon
+  namespace: open-cluster-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: capp-status-addon
+  template:
+    metadata:
+      labels:
+        app: capp-status-addon
+    spec:
+      containers:
+      - args:
+        - manager
+        command:
+        - /status-addon
+        env:
+        - name: ADDON_IMAGE
+          value: controller:latest
+        image: controller:latest
+        imagePullPolicy: IfNotPresent
+        name: capp-status-addon
+      serviceAccountName: capp-status-addon-sa
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rcs-score-addon-manager
+  name: rcs-score-addon-manager
+  namespace: open-cluster-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rcs-score-addon-manager
+  template:
+    metadata:
+      labels:
+        app: rcs-score-addon-manager
+    spec:
+      containers:
+      - args:
+        - manager
+        command:
+        - /score-addon
+        env:
+        - name: ADDON_IMAGE
+          value: controller:latest
+        image: controller:latest
+        imagePullPolicy: IfNotPresent
+        name: rcs-score-addon-manager
+      serviceAccountName: rcs-score-addon-sa
+---
+apiVersion: addon.open-cluster-management.io/v1alpha1
+kind: ClusterManagementAddOn
+metadata:
+  annotations:
+    addon.open-cluster-management.io/lifecycle: addon-manager
+  name: capp-status-addon
+  namespace: open-cluster-management
+spec:
+  addOnMeta:
+    description: Capp Status Addon is an OCM add-on that copies the Capp status from
+      the spoke clusters to the hub cluster.
+    displayName: CappStatusAddon
+---
+apiVersion: addon.open-cluster-management.io/v1alpha1
+kind: ClusterManagementAddOn
+metadata:
+  annotations:
+    addon.open-cluster-management.io/lifecycle: addon-manager
+  name: rcs-score
+  namespace: open-cluster-management
+spec:
+  addOnMeta:
+    description: rcs-score-addon is an example addon that generate addonplacementscore
+      for each managed cluster
+    displayName: Resource Usage Collect Addon
