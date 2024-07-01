@@ -15,7 +15,7 @@ require (
 	k8s.io/api v0.30.2
 	k8s.io/apimachinery v0.30.2
 	k8s.io/client-go v0.30.2
-	open-cluster-management.io/addon-framework v0.9.3
+	open-cluster-management.io/addon-framework v0.10.0
 	open-cluster-management.io/api v0.13.0
 	sigs.k8s.io/controller-runtime v0.18.4
 )
@@ -142,7 +142,7 @@ require (
 	knative.dev/networking v0.0.0-20240116081125-ce0738abf051 // indirect
 	knative.dev/pkg v0.0.0-20240116073220-b488e7be5902 // indirect
 	knative.dev/serving v0.40.1 // indirect
-	open-cluster-management.io/sdk-go v0.13.1-0.20240416030555-aa744f426379 // indirect
+	open-cluster-management.io/sdk-go v0.13.1-0.20240416062924-20307e6fe090 // indirect
 	sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.30.3 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
 	sigs.k8s.io/kube-storage-version-migrator v0.0.6-0.20230721195810-5c8923c5ff96 // indirect
