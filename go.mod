@@ -12,9 +12,9 @@ require (
 	github.com/stretchr/testify v1.9.0
 	go.elastic.co/ecszap v1.0.3
 	go.uber.org/zap v1.27.0
-	k8s.io/api v0.30.2
-	k8s.io/apimachinery v0.30.2
-	k8s.io/client-go v0.30.2
+	k8s.io/api v0.30.3
+	k8s.io/apimachinery v0.30.3
+	k8s.io/client-go v0.30.3
 	open-cluster-management.io/addon-framework v0.10.0
 	open-cluster-management.io/api v0.14.0
 	sigs.k8s.io/controller-runtime v0.18.4
