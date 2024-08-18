@@ -1,0 +1,15 @@
+apiVersion: addon.open-cluster-management.io/v1alpha1
+kind: ClusterManagementAddOn
+metadata:
+  name: {{ include "rcs-ocm-addons.fullname" . }}-rcs-score
+  labels:
+  {{- include "rcs-ocm-addons.labels" . | nindent 4 }}
+  annotations:
+    addon.open-cluster-management.io/lifecycle: addon-manager
+spec:
+  addOnMeta:
+    description: rcs-score-addon is an example addon that generate addonplacementscore
+      for each managed cluster
+    displayName: Resource Usage Collect Addon
+  installStrategy:
+    {{- toYaml .Values.installStrategy.score | nindent 4 }}
