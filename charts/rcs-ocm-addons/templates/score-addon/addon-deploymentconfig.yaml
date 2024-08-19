@@ -1,0 +1,11 @@
+apiVersion: addon.open-cluster-management.io/v1alpha1
+kind: AddOnDeploymentConfig
+metadata:
+  name: {{ .Values.deploymentConfig.name }}
+  namespace: {{ .Values.deploymentConfig.namespace }}
+  labels:
+  {{- include "rcs-ocm-addons.labels" . | nindent 4 }}
+spec:
+  agentInstallNamespace: {{ .Values.deploymentConfig.agentInstallNamespace }}
+  customizedVariables:
+    {{- toYaml .Values.deploymentConfig.customizedVariables | nindent 4 }}

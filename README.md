@@ -16,6 +16,12 @@ Based on the [resource-usage-collect-addon](https://github.com/open-cluster-mana
 
 Check the guide on the `rcs-ocm-deployer` [repo](https://github.com/mzeevi/rcs-ocm-deployer/tree/main?tab=readme-ov-file#deploy-the-add-ons) for information about deploying the `AddOns` on an `OCM` cluster.
 
+Deploy using the Helm chart located at `charts/rcs-ocm-addons`:
+
+```bash
+$ helm upgrade --install rcs-ocm-addons --namespace open-cluster-management --create-namespace oci://ghcr.io/dana-team/helm-charts/rcs-ocm-addons --version <release>
+```
+
 ### Build your own image
 
 ```bash

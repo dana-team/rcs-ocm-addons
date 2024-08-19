@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "rcs-ocm-addons.fullname" . }}-score-addon-manager
+  labels:
+    app: rcs-score-addon-manager
+  {{- include "rcs-ocm-addons.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: rcs-score-addon-manager
+    {{- include "rcs-ocm-addons.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: rcs-score-addon-manager
+      {{- include "rcs-ocm-addons.selectorLabels" . | nindent 8 }}
+    spec:
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 8 }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      tolerations:
+        {{- toYaml .Values.tolerations | nindent 8 }}
+      affinity:
+        {{- toYaml .Values.affinity | nindent 8 }}
+      containers:
+      - name: rcs-score-addon-manager
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command:
+        {{- range .Values.manager.score.command }}
+        - {{ . | quote }}
+        {{- end }}
+        args:
+        {{- range .Values.manager.score.args }}
+        - {{ . | quote }}
+        {{- end }}
+        securityContext:
+          {{- toYaml .Values.manager.securityContext | nindent 12 }}
+        resources:
+          limits:
+            cpu: {{ .Values.manager.resources.limits.cpu }}
+            memory: {{ .Values.manager.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.manager.resources.requests.cpu }}
+            memory: {{ .Values.manager.resources.requests.memory }}
+        env:
+        - name: ADDON_IMAGE
+          value: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+      serviceAccountName: {{ include "rcs-ocm-addons.fullname" . }}-addon-sa
