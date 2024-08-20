@@ -1,7 +1,7 @@
 apiVersion: addon.open-cluster-management.io/v1alpha1
 kind: ClusterManagementAddOn
 metadata:
-  name: {{ include "rcs-ocm-addons.fullname" . }}-capp-status-addon
+  name: capp-status-addon
   labels:
   {{- include "rcs-ocm-addons.labels" . | nindent 4 }}
   annotations:

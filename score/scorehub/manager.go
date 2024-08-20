@@ -27,7 +27,7 @@ import (
 )
 
 const (
-	addonImageDefault          = "ghcr.io/dana-team/rcs-ocm-deployer:main"
+	addonImageDefault          = "ghcr.io/dana-team/rcs-ocm-addons:main"
 	AddonName                  = "rcs-score"
 	templatePath               = "manifests/templates"
 	agentInstallationNamespace = "open-cluster-management-agent-addon"
@@ -35,6 +35,7 @@ const (
 
 //go:embed manifests
 //go:embed manifests/templates
+
 var fs embed.FS
 
 var agentPermissionFiles = []string{

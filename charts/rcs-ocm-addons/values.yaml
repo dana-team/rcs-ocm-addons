@@ -67,7 +67,7 @@ installStrategy:
       - configs:
           - group: addon.open-cluster-management.io
             name: rcs-score-deploy-config
-            namespace: open-cluster-management-hu
+            namespace: open-cluster-management-hub
             resource: addondeploymentconfigs
         name: all-clusters
         namespace: test

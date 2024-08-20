@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "rcs-ocm-addons.fullname" . }}-addon
+  name: {{ include "rcs-ocm-addons.fullname" . }}-score-addon
   labels:
   {{- include "rcs-ocm-addons.labels" . | nindent 4 }}
 rules:

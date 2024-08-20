@@ -10,5 +10,5 @@ roleRef:
   name: {{ include "rcs-ocm-addons.fullname" . }}-capp-status-addon
 subjects:
   - kind: ServiceAccount
-    name: {{ include "rcs-ocm-addons.fullname" . }}-sa
+    name: {{ include "rcs-ocm-addons.fullname" . }}-capp-status-sa
     namespace: {{ .Release.Namespace }}

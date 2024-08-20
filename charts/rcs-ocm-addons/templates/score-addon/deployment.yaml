@@ -3,18 +3,18 @@ kind: Deployment
 metadata:
   name: {{ include "rcs-ocm-addons.fullname" . }}-score-addon-manager
   labels:
-    app: rcs-score-addon-manager
+    app: {{ include "rcs-ocm-addons.fullname" . }}-score-addon-manager
   {{- include "rcs-ocm-addons.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: rcs-score-addon-manager
+      app: {{ include "rcs-ocm-addons.fullname" . }}-score-addon-manager
     {{- include "rcs-ocm-addons.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: rcs-score-addon-manager
+        app: {{ include "rcs-ocm-addons.fullname" . }}-score-addon-manager
       {{- include "rcs-ocm-addons.selectorLabels" . | nindent 8 }}
     spec:
       securityContext:
@@ -49,4 +49,4 @@ spec:
         env:
         - name: ADDON_IMAGE
           value: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
-      serviceAccountName: {{ include "rcs-ocm-addons.fullname" . }}-addon-sa
+      serviceAccountName: {{ include "rcs-ocm-addons.fullname" . }}-score-addon-sa
