@@ -41,7 +41,7 @@ const (
 	templatePath          = "manifests/templates"
 	agentNameLength       = 5
 	agentInstallNameSpace = "open-cluster-management-agent-addon"
-	addonImageDefault     = "ghcr.io/dana-team/rcs-ocm-deployer:main"
+	addonImageDefault     = "ghcr.io/dana-team/rcs-ocm-addons:main"
 )
 
 //go:embed manifests

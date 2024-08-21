@@ -1,7 +1,7 @@
 apiVersion: addon.open-cluster-management.io/v1alpha1
 kind: ClusterManagementAddOn
 metadata:
-  name: {{ include "rcs-ocm-addons.fullname" . }}-rcs-score
+  name: rcs-score
   labels:
   {{- include "rcs-ocm-addons.labels" . | nindent 4 }}
   annotations:

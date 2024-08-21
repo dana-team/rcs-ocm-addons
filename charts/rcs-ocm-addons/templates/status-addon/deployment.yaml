@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "rcs-ocm-addons.fullname" . }}-status-addon-manager
+  name: capp-status-addon-manager
   labels:
-    app: rcs-score-addon-manager
+    app: capp-status-addon-manager
   {{- include "rcs-ocm-addons.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: rcs-score-addon-manager
+      app: capp-status-addon-manager
     {{- include "rcs-ocm-addons.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: rcs-score-addon-manager
+        app: capp-status-addon-manager
       {{- include "rcs-ocm-addons.selectorLabels" . | nindent 8 }}
     spec:
       securityContext:
@@ -26,15 +26,15 @@ spec:
       affinity:
         {{- toYaml .Values.affinity | nindent 8 }}
       containers:
-        - name: rcs-score-addon-manager
+        - name: rcs-status-addon-manager
           image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
-          {{- range .Values.manager.score.command }}
+          {{- range .Values.manager.status.command }}
           - {{ . | quote }}
           {{- end }}
           args:
-          {{- range .Values.manager.score.args }}
+          {{- range .Values.manager.status.args }}
           - {{ . | quote }}
           {{- end }}
           securityContext:
@@ -49,4 +49,4 @@ spec:
           env:
             - name: ADDON_IMAGE
               value: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
-      serviceAccountName: {{ include "rcs-ocm-addons.fullname" . }}-addon-sa
+      serviceAccountName: {{ include "rcs-ocm-addons.fullname" . }}-capp-status-sa
