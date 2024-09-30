@@ -34,7 +34,9 @@ jobs:
       - name: Upload install.yaml file
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/install.yaml
+          files: |
+            dist/score-install.yaml
+            dist/status-install.yaml
 
   build-and-push-helm-chart:
     runs-on: ubuntu-latest
