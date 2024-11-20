@@ -28,7 +28,7 @@ require (
 	github.com/antchfx/xpath v1.3.0 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.0 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
-	github.com/cert-manager/cert-manager v1.16.1 // indirect
+	github.com/cert-manager/cert-manager v1.16.2 // indirect
 	github.com/cisco-open/operator-tools v0.37.0 // indirect
 	github.com/crossplane/crossplane-runtime v1.17.0 // indirect
 	github.com/crossplane/upjet v1.4.1 // indirect
